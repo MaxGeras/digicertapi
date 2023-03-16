@@ -10,10 +10,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Entity(name = "book_author_table")
+@Entity(name = "book_table")
 public class Book {
   @Id
-  @Column(name = "book_author_table_id", columnDefinition = "uuid", updatable = false)
+  @Column(name = "book_table_id", columnDefinition = "uuid", updatable = false)
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
   @Column(name = "isbn", nullable = false)

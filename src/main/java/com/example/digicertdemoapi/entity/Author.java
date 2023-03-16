@@ -10,19 +10,16 @@ import java.util.UUID;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "author_table")
 public class Author {
   @Id
   @Column(name = "author_table_id", columnDefinition = "uuid", updatable = false )
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
-
   @Column(name = "name", nullable = false)
   private String name;
-
   @Column(name = "gender", nullable = false)
   private int gender;
-
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "book_id")
   @JsonIgnore

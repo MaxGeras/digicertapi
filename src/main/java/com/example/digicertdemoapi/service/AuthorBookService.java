@@ -88,6 +88,7 @@ public class AuthorBookService {
         book.getAuthorList().add(author);
       });
     }
+
     return bookAuthorRepository.save(book);
   }
 
@@ -96,7 +97,7 @@ public class AuthorBookService {
    * @param bookId book id
    */
   public void delete(final UUID bookId) {
-    Book book = bookAuthorRepository.findById(bookId)
+    final Book book = bookAuthorRepository.findById(bookId)
         .orElseThrow(() -> new ResourceNotFoundException("Not found book with id = " + bookId));
     bookAuthorRepository.delete(book);
   }
@@ -106,9 +107,7 @@ public class AuthorBookService {
    * @return list of books
    */
   public List<Book> findAllBooks() {
-    List<Book> bookList = new ArrayList<>();
-    bookAuthorRepository.findAll().forEach(bookList::add);
-    return bookList;
+    return new ArrayList<>(bookAuthorRepository.findAll());
   }
 
 }

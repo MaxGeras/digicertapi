@@ -14,7 +14,7 @@
     <createTable remarks="Create book table"
       tableName="book_table">
       <column name="book_table_id" type="${uuid_type}" defaultValueComputed="${uuid_function}">
-        <constraints nullable="false" unique="true"/>
+        <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
       <column name="isbn" type="VARCHAR(20)" >
         <constraints nullable="false"/>

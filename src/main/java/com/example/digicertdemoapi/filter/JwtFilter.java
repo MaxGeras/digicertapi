@@ -22,10 +22,10 @@ public class JwtFilter extends OncePerRequestFilter {
       @NonNull HttpServletResponse httpServletResponse,
       @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-    String authorizationHeader = httpServletRequest.getHeader("Authorization");
+    final String authorizationHeader = httpServletRequest.getHeader("Authorization");
 
     if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-      String token = authorizationHeader.substring(7);
+      final String token = authorizationHeader.substring(7);
       try {
         final Claims claims = JwtUtils.verify(token);
       } catch (Exception e) {

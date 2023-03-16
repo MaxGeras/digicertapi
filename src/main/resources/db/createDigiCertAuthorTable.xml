@@ -14,7 +14,7 @@
     <createTable remarks="Create author table"
       tableName="author_table">
       <column name="author_table_id" type="${uuid_type}" defaultValueComputed="${uuid_function}">
-        <constraints nullable="false" unique="true"/>
+        <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
       <column name="gender" type="tinyint">
         <constraints nullable="false"/>
