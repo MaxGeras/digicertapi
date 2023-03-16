@@ -1,0 +1,30 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <include
+    file="createDigiCertGenderTable.xml"
+    relativeToChangelogFile="true" />
+
+  <include
+    file="createDigiCertAuthorTable.xml"
+    relativeToChangelogFile="true" />
+
+  <include
+    file="createDigiCertPublisherTable.xml"
+    relativeToChangelogFile="true" />
+
+  <include
+    file="createDigiCertBookTable.xml"
+    relativeToChangelogFile="true" />
+
+  <include
+    file="createDigiCertBookTable.xml"
+    relativeToChangelogFile="true" />
+
+  <include
+    file="insertDigiCertGenderTable.xml"
+    relativeToChangelogFile="true" />
+
+</databaseChangeLog>

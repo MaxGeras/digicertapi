@@ -1,0 +1,45 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <property name="uuid_type" value="uuid" dbms="postgresql" />
+  <property name="uuid_type" value="uniqueidentifier" dbms="mssql" />
+  <property name="uuid_type" value="RAW(16)" dbms="oracle" />
+
+  <property name="uuid_function" value="uuid_generate_v4()" dbms="postgresql" />
+  <property name="uuid_function" value="NEWID()" dbms="mssql" />
+  <property name="uuid_function" value="sys_guid()" dbms="oracle" />
+  <changeSet author="digicert" id="2">
+    <!-- Enable uuid_generate_v4() function support for PostgreSQL -->
+    <sql stripComments="true" dbms="postgresql">
+      CREATE EXTENSION IF NOT EXISTS "uuid-ossp"
+    </sql>
+    <createTable remarks="Create book table"
+      tableName="book_table">
+      <column name="book_table_id" type="${uuid_type}" defaultValueComputed="${uuid_function}">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="isbn" type="VARCHAR(20)" >
+        <constraints nullable="false"/>
+      </column>
+      <column name="title" type="VARCHAR(50)" >
+        <constraints nullable="false" />
+      </column>
+      <column name="publisher_id" type="${uuid_type}" >
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="author_id" type="${uuid_type}" >
+        <constraints nullable="false"/>
+      </column>
+      <column name="createdon"
+        type="TIMESTAMP"
+        defaultValueDate="CURRENT_TIMESTAMP">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="book_table"
+      baseColumnNames="author_id" constraintName="fk_author_table_id"
+      referencedTableName="author_table" referencedColumnNames="author_table_id"/>
+    <addForeignKeyConstraint baseTableName="book_table"
+      baseColumnNames="publisher_id" constraintName="fk_book_publisher_id"
+      referencedTableName="publisher_table" referencedColumnNames="publisher_table_id"/>
+  </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,19 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet author="digicert" id="4">
+    <createTable remarks="Create gender table"
+      tableName="gender_table">
+      <column name="gender_table_id" type="tinyint">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="gender" type="VARCHAR(10)" >
+        <constraints nullable="false"/>
+      </column>
+      <column name="createdon"
+        type="TIMESTAMP"
+        defaultValueDate="CURRENT_TIMESTAMP">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

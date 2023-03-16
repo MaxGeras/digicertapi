@@ -1,0 +1,13 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet author="digicert" id="6">
+    <insert tableName="gender_table">
+      <column name="gender_table_id" value="1" />
+      <column name="gender" value="MALE"/>
+    </insert>
+    <insert tableName="gender_table">
+      <column name="gender_table_id" value="2" />
+      <column name="gender" value="FEMALE"/>
+    </insert>
+  </changeSet>
+
+</databaseChangeLog>

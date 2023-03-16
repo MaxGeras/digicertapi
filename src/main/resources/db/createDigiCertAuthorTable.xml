@@ -1,0 +1,36 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <property name="uuid_type" value="uuid" dbms="postgresql" />
+  <property name="uuid_type" value="uniqueidentifier" dbms="mssql" />
+  <property name="uuid_type" value="RAW(16)" dbms="oracle" />
+
+  <property name="uuid_function" value="uuid_generate_v4()" dbms="postgresql" />
+  <property name="uuid_function" value="NEWID()" dbms="mssql" />
+  <property name="uuid_function" value="sys_guid()" dbms="oracle" />
+  <changeSet author="digicert" id="1">
+    <!-- Enable uuid_generate_v4() function support for PostgreSQL -->
+    <sql stripComments="true" dbms="postgresql">
+      CREATE EXTENSION IF NOT EXISTS "uuid-ossp"
+    </sql>
+    <createTable remarks="Create author table"
+      tableName="author_table">
+      <column name="author_table_id" type="${uuid_type}" defaultValueComputed="${uuid_function}">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="gender" type="tinyint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="VARCHAR(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="createdon"
+        type="TIMESTAMP"
+        defaultValueDate="CURRENT_TIMESTAMP">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="author_table"
+      baseColumnNames="gender" constraintName="fk_author_gender"
+      referencedTableName="gender_table" referencedColumnNames="gender_table_id"/>
+  </changeSet>
+
+</databaseChangeLog>
