@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AuthorDTO {
-  String name;
+  String fullName;
   String gender;
 
 }

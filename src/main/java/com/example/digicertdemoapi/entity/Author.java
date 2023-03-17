@@ -3,8 +3,8 @@ package com.example.digicertdemoapi.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.UUID;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Data
 @ToString
@@ -13,15 +13,14 @@ import java.util.UUID;
 @Entity(name = "author_table")
 public class Author {
   @Id
-  @Column(name = "author_table_id", columnDefinition = "uuid", updatable = false )
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
-  @Column(name = "name", nullable = false)
-  private String name;
+  @Column(name = "full_name", updatable = false)
+  private String fullName;
+
   @Column(name = "gender", nullable = false)
   private int gender;
+
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "book_id")
+  @JoinColumn(name = "author_full_name")
   @JsonIgnore
   private Book book;
 }

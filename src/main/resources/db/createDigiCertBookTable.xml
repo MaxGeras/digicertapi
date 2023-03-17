@@ -21,8 +21,8 @@
       <column name="publisher_id" type="${uuid_type}" >
         <constraints nullable="false" unique="true"/>
       </column>
-      <column name="author_id" type="${uuid_type}" >
-        <constraints nullable="false" unique="true" />
+      <column name="author_full_name" type="VARCHAR(100)" >
+        <constraints nullable="false" />
       </column>
       <column name="createdon"
         type="TIMESTAMP"
@@ -31,8 +31,8 @@
       </column>
     </createTable>
     <addForeignKeyConstraint baseTableName="book_table"
-      baseColumnNames="author_id" constraintName="fk_author_table_id"
-      referencedTableName="author_table" referencedColumnNames="author_table_id"/>
+      baseColumnNames="author_full_name" constraintName="fk_author_full_name"
+      referencedTableName="author_table" referencedColumnNames="full_name"/>
     <addForeignKeyConstraint baseTableName="book_table"
       baseColumnNames="publisher_id" constraintName="fk_book_publisher_id"
       referencedTableName="publisher_table" referencedColumnNames="publisher_table_id"/>

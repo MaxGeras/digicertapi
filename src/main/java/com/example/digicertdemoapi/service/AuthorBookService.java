@@ -4,19 +4,22 @@ import com.example.digicertdemoapi.dto.BookDTO;
 import com.example.digicertdemoapi.entity.*;
 import com.example.digicertdemoapi.enums.GenderAuthor;
 import com.example.digicertdemoapi.exception.ResourceNotFoundException;
+import com.example.digicertdemoapi.repository.AuthorRepository;
 import com.example.digicertdemoapi.repository.BookAuthorRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AuthorBookService {
   private final BookAuthorRepository bookAuthorRepository;
+  private final AuthorRepository authorRepository;
 
-  public AuthorBookService(final BookAuthorRepository bookAuthorRepository) {
+  public AuthorBookService(
+      final BookAuthorRepository bookAuthorRepository,
+      final AuthorRepository authorRepository) {
     this.bookAuthorRepository = bookAuthorRepository;
+    this.authorRepository = authorRepository;
   }
 
   /**
@@ -31,16 +34,20 @@ public class AuthorBookService {
       publisher.setCountry(bookDTO.getPublisher().getCountry());
       publisher.setName(bookDTO.getPublisher().getName());
 
-      final List<Author> authorList = new ArrayList<>();
+      final Set<Author> authorList = new HashSet<>();
+
       bookDTO.getAuthorList().forEach(authorDTO -> {
-          final Author author = new Author();
-          author.setGender(authorDTO.getGender()
-              .equalsIgnoreCase(GenderAuthor.MALE.toString())
-              ? 1
-              : 2
-          );
-          author.setName(authorDTO.getName());
-          authorList.add(author);
+          if (!authorRepository.existsById(authorDTO.getFullName())) {
+            Author author = new Author();
+            author.setGender(authorDTO.getGender()
+                  .equalsIgnoreCase(GenderAuthor.MALE.toString())
+                  ? 1
+                  : 2
+              );
+              author.setFullName(authorDTO.getFullName());
+              authorRepository.save(author);
+              authorList.add(author);
+          }
       });
 
       final Book book = new Book();
@@ -78,13 +85,14 @@ public class AuthorBookService {
     if(bookDTO.getAuthorList() != null && !bookDTO.getAuthorList().isEmpty()) {
       book.getAuthorList().clear();
       bookDTO.getAuthorList().forEach(authorDTO -> {
+
         final Author author = new Author();
         author.setGender(authorDTO.getGender()
             .equalsIgnoreCase(GenderAuthor.MALE.toString())
             ? 1
             : 2
         );
-        author.setName(authorDTO.getName());
+        author.setFullName(authorDTO.getFullName());
         book.getAuthorList().add(author);
       });
     }
