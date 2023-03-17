@@ -14,9 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -38,7 +36,7 @@ public class BookRestControllerTest {
     book.setTitle("test");
     book.setIsbn("234343432");
     book.setPublisher(new Publisher(UUID.randomUUID() ,"USA", "digicert"));
-    book.setAuthorList(List.of(new Author(UUID.randomUUID(), "Test Test", 1, book)));
+    book.setAuthorList(new HashSet<>(List.of(new Author("Test Test", 1, book))));
     List<Book> records = new ArrayList<>(List.of(book));
 
     Mockito.when(bookAuthorRepository.findAll()).thenReturn(records);
@@ -54,7 +52,7 @@ public class BookRestControllerTest {
     book.setTitle("test");
     book.setIsbn("234343432");
     book.setPublisher(new Publisher(UUID.randomUUID() ,"USA", "digicert"));
-    book.setAuthorList(List.of(new Author(UUID.randomUUID(), "Test Test", 1, book)));
+    book.setAuthorList(new HashSet<>(List.of(new Author("Test Test", 1, book))));
     List<Book> records = new ArrayList<>(List.of(book));
 
     Mockito.when(bookAuthorRepository.findAll()).thenReturn(records);
